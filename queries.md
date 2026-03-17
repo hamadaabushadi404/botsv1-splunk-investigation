@@ -34,3 +34,6 @@ index=botsv1 sourcetype=suricata event\_type=alert alert.signature="SURICATA DNS
 
 Used to identify attacker and victim IPs.
 
+
+index=botsv1 src_ip=192.168.250.20
+
