@@ -1,45 +1,72 @@
-﻿# Splunk Queries Used During Investigation
+﻿# Splunk Queries Used in Investigation
 
-This file will contain the Splunk queries used during the investigation.
+---
 
+## 1. Identify Available Data Sources
 
+index=botsv1
+| stats count by sourcetype
 
-### Top Attacks
+---
 
+## 2. Identify Top Suricata Alerts
 
-
-index=botsv1 sourcetype=suricata event\_type=alert
-
+index=botsv1 sourcetype=suricata event_type=alert
 | stats count by alert.signature
-
 | sort -count
 
+---
 
+## 3. Identify Source of DNS Alerts
 
-Used to identify the most frequent attack types in the dataset.
-
-
-
-
-
-### DNS Attack Source Identification
-
-
-
-index=botsv1 sourcetype=suricata event\_type=alert alert.signature="SURICATA DNS malformed request data"
-
-| stats count by src\_ip dest\_ip
-
+index=botsv1 sourcetype=suricata event_type=alert alert.signature="SURICATA DNS malformed request data"
+| stats count by src_ip dest_ip
 | sort -count
 
-Used to identify attacker and victim IPs.
+---
 
+## 4. Identify Attacker Behavior
 
 index=botsv1 src_ip=192.168.250.20
+| stats count by dest_ip
+| sort -count
 
-### Detect DNS-based attack from attacker to victim
+---
+
+## 5. Analyze Attacker Activity by Sourcetype
+
+index=botsv1 src_ip=192.168.250.20
+| stats count by sourcetype
+| sort -count
+
+---
+
+## 6. Discover DNS Fields
+
+index=botsv1 src_ip=192.168.250.20 sourcetype=stream:dns
+| head 20
+| fieldsummary
+
+---
+
+## 7. Extract DNS Queries (Domains)
+
+index=botsv1 src_ip=192.168.250.20 sourcetype=stream:dns
+| stats count by hostname{}
+| sort -count
+
+---
+
+## 8. Identify Victim from Alerts
+
+index=botsv1 src_ip=192.168.250.20 sourcetype=suricata event_type=alert
+| stats count by dest_ip
+| sort -count
+
+---
+
+## 9. Analyze Alerts Between Attacker and Victim
 
 index=botsv1 src_ip=192.168.250.20 dest_ip=192.168.250.100 sourcetype=suricata event_type=alert
 | stats count by alert.signature
 | sort -count
-

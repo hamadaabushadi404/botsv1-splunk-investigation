@@ -1,36 +1,31 @@
 ﻿# Attack Timeline
 
-This file will be updated during the investigation to track the sequence of attacker activity.
-Initial investigation started.
-Searching for suspicious activity in BOTSv1 dataset.
+---
 
-### DNS Malformed Request Activity
+1. Initial data exploration revealed multiple sourcetypes including Suricata and network stream logs.
 
+2. Analysis of Suricata alerts showed a high number of DNS-related alerts.
 
+3. Investigation identified attacker IP:
+   192.168.250.20
 
-An internal host (192.168.250.20) generated a high volume of malformed DNS requests targeting 192.168.250.100.
+4. Victim identification based on alert frequency:
+   192.168.250.100
 
+5. Additional host observed with high traffic:
+   192.168.250.40 (not primary alert target)
 
+6. Alert analysis revealed:
+   - DNS malformed request data (739 events)
+   - DNS unsolicited response (1 event)
 
-Total requests: 739
+7. DNS traffic analysis showed repeated queries to suspicious domains.
 
+8. Identified suspicious domains:
+   - hostby.guardomicro.com
+   - ns3.isp4p.net
+   - ns.kirov.ru
+   - xantrox-server.de
 
-
-This behavior is suspicious and may indicate scanning activity or malware communication.
-
-
-### Attacker Target Analysis
-
-The attacker (192.168.250.20) communicated with multiple internal and external hosts.
-
-Top targets include:
-- 8.8.8.8 (external DNS) – 6444 requests
-- 192.168.250.100 – 2362 requests
-- 192.168.250.40 – 1472 requests
-
-This behavior indicates possible DNS activity, internal scanning, and external communication.
-
-- Attacker (192.168.250.20) generated high volume of DNS malformed requests targeting victim (192.168.250.100).
-
-
-- Attacker used DNS protocol to communicate with suspicious domains, indicating possible C2 or data exfiltration.
+9. Final conclusion:
+   DNS protocol was used as a covert communication channel.

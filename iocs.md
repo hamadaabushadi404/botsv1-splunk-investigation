@@ -1,17 +1,31 @@
-﻿# Indicators of Compromise
+﻿# Indicators of Compromise (IOCs)
 
-This file will contain the IOCs extracted during the investigation, such as IP addresses, domains, file names, users, and hashes.
+---
 
-IPs:
-192.168.250.20 (Attacker)
-192.168.250.100 (Victim)
+## IP Addresses
 
-Detection:
-DNS malformed request activity
+Attacker:
+192.168.250.20
 
+Victim:
+192.168.250.100
 
-Domains:
-hostby.guardomicro.com
-ns3.isp4p.net
-ns.kirov.ru
-xantrox-server.de
+Other Observed Host:
+192.168.250.40
+
+---
+
+## Suspicious Domains
+
+- hostby.guardomicro.com
+- ns3.isp4p.net
+- ns.kirov.ru
+- xantrox-server.de
+
+---
+
+## Detection Indicators
+
+- High volume of DNS malformed requests
+- Abnormal DNS traffic frequency
+- Repeated queries to uncommon domains
