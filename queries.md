@@ -37,3 +37,9 @@ Used to identify attacker and victim IPs.
 
 index=botsv1 src_ip=192.168.250.20
 
+### Detect DNS-based attack from attacker to victim
+
+index=botsv1 src_ip=192.168.250.20 dest_ip=192.168.250.100 sourcetype=suricata event_type=alert
+| stats count by alert.signature
+| sort -count
+

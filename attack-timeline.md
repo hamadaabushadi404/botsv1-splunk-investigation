@@ -29,3 +29,8 @@ Top targets include:
 - 192.168.250.40 – 1472 requests
 
 This behavior indicates possible DNS activity, internal scanning, and external communication.
+
+- Attacker (192.168.250.20) generated high volume of DNS malformed requests targeting victim (192.168.250.100).
+
+
+- Attacker used DNS protocol to communicate with suspicious domains, indicating possible C2 or data exfiltration.
